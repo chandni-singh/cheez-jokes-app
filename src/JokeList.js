@@ -17,6 +17,8 @@ class JokeList extends Component {
             jokes : JSON.parse(window.localStorage.getItem("jokes") || "[]"), //Data shows even after refresh
             loading : false
         }
+
+        this.seenJokes = new Set(this.state.jokes.map(j => j.text));
         
         this.handleClick = this.handleClick.bind(this);
     }
@@ -28,18 +30,29 @@ class JokeList extends Component {
     }
 
     async getJokes() {
-        let jokes = [];
 
-        while(jokes.length < this.props.numJokes) {
-            let response = await axios.get(API_URL, {headers : header});
+        try{
+            let jokes = [];
+
+            while(jokes.length < this.props.numJokes) {
+                let response = await axios.get(API_URL, {headers : header});
                 
-            jokes.push({ text : response.data.joke, id : response.data.id, votes : 0});
+                let newJoke = response.data.joke; // to avoid duplication of jokes from API
+                if(!this.seenJokes.has(newJoke)) {
+                    jokes.push({ text : response.data.joke, id : response.data.id, votes : 0});
+                }
+            }
+    
+            this.setState(st => ({loading : false, jokes : [...st.jokes, ...jokes]}),
+            () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
+            );
+        } 
+        catch(err) {
+            alert(err);
+            this.setState({loading : false});
         }
+    } 
 
-        this.setState(st => ({loading : false, jokes : [...st.jokes, ...jokes]}),
-        () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
-        );
-    }
 
     handleVote(id, delta) {
         this.setState(st => ({
