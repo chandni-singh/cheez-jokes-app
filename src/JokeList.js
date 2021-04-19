@@ -85,7 +85,7 @@ class JokeList extends Component {
                 <div className = "JokeList-sidebar">
                     <h1 className = "JokeList-title"><span>Dad</span> Jokes!</h1>
                     <img src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/face-with-tears-of-joy_1f602.png"></img>
-                    <button className = "JokeList-getMore" onClick = {this.handleClick}>Get more Jokes!</button>
+                    <button className = "JokeList-getMore" onClick = {this.handleClick}>New Jokes</button>
                 </div>
 
                 <div className = "JokeList-jokes">
