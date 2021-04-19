@@ -23,13 +23,10 @@ class JokeList extends Component {
 
         while(jokes.length < this.props.numJokes) {
             let response = await axios.get(API_URL, {headers : header});
-            // if(response.data.id !== this.state.jokes[i-1].id) {
-                jokes.push({ text : response.data.joke, id : response.data.id, votes : 0});
-                // this.setState( st => (
-                //     {jokes : [...st.jokes, {joke : response.data.joke, id : response.data.id, score : 0}]}
-                // ))
-            // }
+                
+            jokes.push({ text : response.data.joke, id : response.data.id, votes : 0});
         }
+        
         this.setState({jokes : jokes})
     }
 
@@ -44,7 +41,7 @@ class JokeList extends Component {
 
         return(
             <div className = "JokeList">
-                
+
                 <div className = "JokeList-sidebar">
                     <h1 className = "JokeList-title"><span>Dad</span> Jokes!</h1>
                     <img src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/face-with-tears-of-joy_1f602.png"></img>

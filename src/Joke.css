@@ -1,3 +1,43 @@
-.List {
-    list-style: none;
+.Joke {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #eeeeee;
+    padding: 1rem;
+}
+
+.Joke-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    width: 15%;
+}
+
+.Joke-text {
+    font-size:1.2rem;
+    width:75%;
+}
+
+.Joke-votes {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    border: 2px solid red;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.3), 0 15px 12px rgba(0,0,0,0.1);
+}
+
+.fa-arrow-up, .fa-arrow-down {
+    margin: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+} 
+
+.Joke-emoji {
+    font-size:3rem;
+    border-radius: 50%;
+    margin-left: auto; /*pushes content to far right in flex box*/
+    box-shadow: 0 19px 38px rgba(0,0,0,0.3), 0 15px 12px rgba(0,0,0,0.1);
 }
