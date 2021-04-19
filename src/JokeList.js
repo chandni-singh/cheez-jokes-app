@@ -16,8 +16,6 @@ class JokeList extends Component {
         this.state = {
             jokes : []
         }
-        // this.countVoteDown = this.countVoteDown.bind(this);
-        // this.countVoteUp = this.countVoteUp.bind(this);
     }
 
     async componentDidMount() {
@@ -26,7 +24,7 @@ class JokeList extends Component {
         while(jokes.length < this.props.numJokes) {
             let response = await axios.get(API_URL, {headers : header});
             // if(response.data.id !== this.state.jokes[i-1].id) {
-                jokes.push({ text : response.data.joke, votes : 0});
+                jokes.push({ text : response.data.joke, id : response.data.id, votes : 0});
                 // this.setState( st => (
                 //     {jokes : [...st.jokes, {joke : response.data.joke, id : response.data.id, score : 0}]}
                 // ))
@@ -35,33 +33,18 @@ class JokeList extends Component {
         this.setState({jokes : jokes})
     }
 
-    // countVoteUp(id) {
-    //     for(let i=0; i<10; i++) {
-    //         if(this.state.jokes[i].id === id) {
-    //             console.log(this.state.jokes[i]);
-    //             this.setState( st => (
-    //                 {jokes : [...st.jokes, {score : score++}]}
-    //             ))
-    //         }
-    //     }
-
-    // }
-
-    // countVoteDown(id) {
-    //     this.setState( st => {
-    //         if(st.id === id) {
-    //             st.score--;
-    //         }
-    //     });
-    // }
+    handleVote(id, delta) {
+        this.setState(st => ({
+            jokes : this.state.jokes.map(j =>
+                j.id === id ? {...j, votes: j.votes+delta} : j)
+        }));
+    }
 
     render() {
-        // const jokeDisplay = this.state.jokes.map(j => 
-        //     <List joke = {j.joke} key = {j.id} id = {j.id} voteUp = {this.countVoteUp} voteDown = {this.countVoteDown} />
-        // )
 
         return(
             <div className = "JokeList">
+                
                 <div className = "JokeList-sidebar">
                     <h1 className = "JokeList-title"><span>Dad</span> Jokes!</h1>
                     <img src = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/face-with-tears-of-joy_1f602.png"></img>
@@ -69,9 +52,15 @@ class JokeList extends Component {
                 </div>
 
                 <div className = "JokeList-jokes">
-                    {this.state.jokes.map(j => <Jokes text = {j.text} votes = {j.votes} />)}
+                    {this.state.jokes.map(j => 
+                    <Joke text = {j.text} 
+                          key = {j.id} 
+                          votes = {j.votes}
+                          upVote = {() => this.handleVote(j.id, 1)}
+                          downVote = {() => this.handleVote(j.id, -1)}
+                    />)}
                 </div>
-                {/* <ul>{jokeDisplay}</ul> */}
+
             </div>
 
 

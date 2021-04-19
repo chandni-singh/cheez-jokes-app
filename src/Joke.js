@@ -2,28 +2,19 @@ import React, {Component} from 'react';
 import './Joke.css';
 
 class Joke extends Component {
-    constructor(props) {
-        super(props);
-
-        // this.handleClickUp = this.handleClickUp.bind(this);
-        // this.handleClickDown = this.handleClickDown.bind(this);
-        
-    }
-
-    // handleClickUp() {
-    //     this.props.voteUp(this.props.id);
-    // }
-
-    // handleClickDown() {
-    //     this.props.voteDown(this.props.id);
-    // }
     
     render() {
         return (
-            <div>
-                <li className = "List">{this.props.joke}</li>
-                    <button onClick = {this.handleClickUp}>Vote Up+</button>
-                    <button onClick = {this.handleClickDown}>Vote Down-</button>
+            <div className = "Joke">
+
+                <div className = "Joke-buttons">
+                    <i className = "fas fa-arrow-up" onClick = {this.props.upVote}></i>
+                    <span>{this.props.votes}</span>
+                    <i className = "fas fa-arrow-down" onClick = {this.props.downVote}></i>
+                </div>
+
+                <div className = "Joke-text">{this.props.text}</div>
+
             </div>
             
         )
